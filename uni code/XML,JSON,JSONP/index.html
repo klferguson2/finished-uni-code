@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+	<link type="text/css" rel="stylesheet" href="css/main.css">
+	
+	<head>
+		<title>The AJAX Method</title>
+	</head>
+	
+	<body>
+		<div id="main">
+			
+			<div id="header">
+				<h1 class="header">The AJAX Method</h1>
+			</div>
+			
+			<div id="example">
+				<h1 class="h-example">Example 1: XML</h1>
+				<p class="p-example">Here is an example of the AJAX method using XML:</p>
+				<button type="button" onclick="loadDoc()">Get my CD collection</button>
+				<br><br>
+				<table id="demo"></table>
+				<!--I tried to get xml working by using an example from w3schools as a basis, however I could not make it work. The
+				following script was taken directly from there in an attempt to make sense of it before creating my own. Out of time,
+				I will have to leave it at this.-->
+				<script>
+				function loadDoc() {
+				  var xhttp = new XMLHttpRequest();
+				  xhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+					  myFunction(this);
+					}
+				  };
+				  xhttp.open("GET", "cd_catalog.xml", true);
+				  xhttp.send();
+				}
+				function myFunction(xml) {
+				  var i;
+				  var xmlDoc = xml.responseXML;
+				  var table="<tr><th>Artist</th><th>Title</th></tr>";
+				  var x = xmlDoc.getElementsByTagName("CD");
+				  for (i = 0; i <x.length; i++) { 
+					table += "<tr><td>" +
+					x[i].getElementsByTagName("ARTIST")[0].childNodes[0].nodeValue +
+					"</td><td>" +
+					x[i].getElementsByTagName("TITLE")[0].childNodes[0].nodeValue +
+					"</td></tr>";
+				  }
+				  document.getElementById("demo").innerHTML = table;
+				}
+				</script>
+				
+			</div>
+			
+			<div id="example">
+				<h1 class="h-example">Example 2: JSON</h1>
+				<p class="p-example">Here is an example of the AJAX method using JSON.</p>
+				<p class="p-example">When you click the following button, you will see the names of 3 songs and the artists who sing them.</p>
+				<p class="p-example">The data is being pulled from 'github' using JSON.</p>
+				<button id="music">Click me</button>
+				<div id="json"></div>
+				<script src='js/main.js'></script>
+			</div>
+			
+			<div id="example">
+				<h1 class="h-example">Example 3: JSONP</h1>
+				<p class="p-example">Here is an example of the AJAX method using JSONP.</p>
+				<p class="p-example">This Google map is being accessed using JSONP:</p>
+				<div id="googleMap" style="width:60%;height:200px;"></div>
+
+				<script>
+					//creating a function
+					function myMap() {
+					var mapItem= {
+					//the map co-ordinates for burnley general hospital using latitude and longitude - I have used the coordinate for UCLAN Burnley
+					center:new google.maps.LatLng(53.8089,-2.2283),
+					//ensuring the map zooms in to the location and not just on a full map of uk
+						zoom:15,
+					};
+					//accessing the inner html element for googlemap using variable mapItem
+					var map=new google.maps.Map(document.getElementById("googleMap"),mapItem);
+					}
+				</script>
+				<!--my api key and the url of the googlemap I want-->
+				<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCba-kxYhkd3OyqEL1FwdJQ6LRhhqv68-A&callback=myMap"></script>
+				<p class="p-example">The map is automatically pointed at Burnley General Hospital.</p>
+			</div>
+			
+		</div>	
+		
+	</body>
+	
+</html>

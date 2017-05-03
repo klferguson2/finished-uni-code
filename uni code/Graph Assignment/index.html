@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+	<link type="text/css" rel="stylesheet" href="css/main.css">
+	
+	<head>
+		<title>Popular Sports</title>
+		<script type="text/javascript">
+					var canvas ;
+					var context ;
+					var Val_Max;
+					var Val_Min;
+					var sections;
+					var xScale;
+					var yScale;
+					var y;
+							// values of each item on the graph
+					var itemName = [ "FOOTBALL", "RUGBY", "CRICKET", "TENNIS" , "HOCKEY"];
+					var itemValue = [ 12, 8, 6, 5, 3 ];
+
+					function init() {
+							// intialize values for each variables
+						sections = 5;
+						Val_Max = 14;
+						var stepSize = 0.5;
+						var columnSize = 20;
+						var rowSize = 60;
+						var margin = 10;
+						var header = "Hundred" 
+							//
+							
+						canvas = document.getElementById("canvas");
+						context = canvas.getContext("2d");
+						context.fillStyle = "#000;"
+						
+						yScale = (canvas.height - columnSize - margin) / (Val_Max);
+						xScale = (canvas.width - rowSize) / (sections + 1);
+						
+						context.strokeStyle="#000;"; // background black lines
+						context.beginPath();
+							// column names 
+						context.font = "30 pt Arial;"
+						context.fillText(header, 0,columnSize - margin);
+							// draw lines in the background
+						context.font = "16 pt Helvetica"
+						var count =  0;
+						for (scale=Val_Max;scale>=0;scale = scale - stepSize) {
+							y = columnSize + (yScale * count * stepSize); 
+							context.fillText(scale, margin,y + margin);
+							context.moveTo(rowSize,y)
+							context.lineTo(canvas.width,y)
+							count++;
+						}
+						context.stroke();
+						
+							// print names of each data entry
+						context.font = "20 pt Verdana";
+						context.textBaseline="bottom";
+						for (i=0;i<5;i++) {
+							computeHeight(itemValue[i]);
+							context.fillText(itemName[i], xScale * (i+1),y - margin);
+						}
+						
+							// shadow for graph's bar lines with color and offset
+					  
+						context.fillStyle="#9933FF;";
+					  context.shadowColor = 'rgba(128,128,128, 0.5)';
+					  
+					  //shadow offset along X and Y direction 
+						context.shadowOffsetX = 9;
+						context.shadowOffsetY = 3;
+					  
+							// translate to bottom of graph  inorder to match the data 
+					  context.translate(0,canvas.height - margin);
+						context.scale(xScale,-1 * yScale);
+					  
+							// draw each graph bars	
+						for (i=0;i<5;i++) {
+							context.fillRect(i+1, 0, 0.3, itemValue[i]);
+						}
+					}
+
+					function computeHeight(value) {
+						y = canvas.height - value * yScale ;	
+					}
+
+				</script>
+	</head>
+	
+	<body onLoad="init()">
+		<div id="main">
+			
+			<div id="header">
+				<h1 class="header">Popular Sports</h1>
+			</div>
+			
+			<div id="example">
+				<h1 class="h-example">Popular Sports Bar Graph</h1>
+				<p class="p-example">Below are the results in a bar graph form</p>
+				<canvas id="canvas" height="400" width="650">
+				</canvas>
+				<p class="p-example">This assignment we were asked to produce data displayed in a visual form. <br> I produced a bar graph to display the popularity of each sport. This graph is to show which sport is the most popular among high school student.<br> To produce this graph i first found a template online to help me set out the code correctly.<br> Following the template as a guide i was able to repoduce the table with all the correct data displaying.<br>On the graph each sport has it's own bar with a good amount of space between the bars, the space is there to allow the graph to be easily read.<br>The bars are coloured in black and are against a white background, again this is so then the bars are easy to see.<br>The numbers down the left hand side of the graph are there to represent the number of people. They start at zero and go up to fourteen hundred.<br>Even though the graph is basic i feel it is effective in displaying the data, it is clear and easy to read.<br><br>Looking back over the assignment i feel it went quite well.<br>I was able to produce a graph and even though it is only a basic graph i am happy with how it turned out.<br>If i was to do anything differently, i would take more time to create a more interesting graph that has more colour and even an animation.<br>However i am happy with what i was able to produce. </p>
+			</div>
+						
+		</div>	
+		
+	</body>
+	
+</html>
